@@ -1,41 +1,52 @@
-# Run Code Here
+# Code Runner
 
-A local Chrome extension that adds a right-click menu item named **Run code here**.
+Code Runner is a Chrome extension that lets you run code snippets from the page you are viewing. Select a snippet or right-click a code block, choose **Run code here**, and execute Python, JavaScript, HTML, or CSS in an in-page panel.
 
-For the full GitHub project overview, architecture notes, and diagrams, see the root `README.md` and `docs/NOTES.md`.
+## Features
 
-## Install
+- Runs Python, JavaScript, HTML, and CSS snippets without opening a separate editor.
+- Detects the likely language automatically; you can override it from the language selector.
+- Accepts multiline input for Python `input()` calls and JavaScript `prompt()` calls.
+- Bundles Pyodide and common Python packages, so many Python examples work without downloading a runtime at execution time.
 
-1. Open `chrome://extensions`.
-2. Turn on **Developer mode**.
-3. Click **Load unpacked**.
-4. Select this folder:
+## Install locally
 
-   `/Users/krishnakalvapudi/Documents/Codex/2026-05-16/how-do-i-run-a-code/run-code-here-extension`
+Code Runner is currently installed as an unpacked extension:
+
+1. Download or clone this repository.
+2. In Chrome, open `chrome://extensions`.
+3. Turn on **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the cloned `Code-Runner` folder.
 
 ## Use
 
-1. Open a page with Python, HTML, CSS, or JavaScript code.
-2. Right-click directly on a code block, or select code first and then right-click.
-3. Click **Run code here**.
-4. The code runs in a small panel on the same page.
+1. Open a page containing a Python, JavaScript, HTML, or CSS snippet.
+2. Select the code or right-click directly on its code block.
+3. Choose **Run code here** from the context menu.
+4. Review the detected language, add input if needed, then select **Run**.
 
-The language selector defaults to **Auto**, but you can manually choose Python, HTML, CSS, or JavaScript before pressing **Run**.
-If the snippet asks for input, type each response on its own line in the **Input** box before pressing **Run**. Python `input()` and browser `prompt()` calls consume those lines in order.
+The first Python execution can take a few seconds while the bundled Pyodide runtime starts.
 
-The first Python run can take a few seconds because it starts Pyodide, a Python runtime for the browser. The core runtime is bundled with the extension so pages with strict script policies are less likely to block it.
-If your Python code imports common bundled packages, the extension loads them automatically. Built-in modules like `math` work without extra loading.
+## Permissions
 
-Bundled Python packages include:
+The extension requests the following Chrome permissions:
 
-- Data/science: `numpy`, `pandas`, `scipy`, `scikit-learn`, `statsmodels`, `xarray`
-- Plotting/math: `matplotlib`, `sympy`, `altair`
-- Web/parsing: `requests`, `beautifulsoup4`/`bs4`, `lxml`, `pyodide-http`
-- Utilities: `networkx`, `sqlalchemy`, `sqlite3`, `regex`, `tqdm`, `pyyaml`, `pydantic`, `jinja2`, `jsonschema`, `nltk`, `xlrd`, `micropip`, `pillow`
+- `contextMenus` to add **Run code here** to the right-click menu.
+- `activeTab` and `scripting` to read the selected snippet and display the runner on the active page.
+- Access to matching pages so the runner can work wherever code snippets appear.
 
-## Notes
+## Python support
 
-- This is for learning examples and small snippets.
-- Pages with very strict security rules may block the embedded runtime.
-- Code that needs local files, installed system packages, or operating system access will not work in the browser sandbox.
-- The extension folder is larger because it includes Pyodide plus common package support.
+The bundled runtime includes commonly used packages such as NumPy, pandas, SciPy, scikit-learn, matplotlib, SymPy, requests, Beautiful Soup, lxml, NetworkX, SQLAlchemy, Pillow, and more. Standard-library modules such as `math` work without additional loading.
+
+## Limitations
+
+- Intended for learning, exploration, and small snippets—not untrusted or production workloads.
+- Python runs in the browser sandbox; it cannot access local files, installed system packages, or the operating system.
+- Sites with strict content-security policies can prevent the runner from loading.
+- The repository is relatively large because it includes the Pyodide runtime and bundled Python packages.
+
+## License
+
+No license has been selected yet. Add a license before distributing or accepting outside contributions.
