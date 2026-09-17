@@ -2,6 +2,10 @@
 
 Code Runner is a Chrome extension that lets you run code snippets from the page you are viewing. Select a snippet or right-click a code block, choose **Run code here**, and execute Python, JavaScript, HTML, or CSS in an in-page panel.
 
+![Code Runner panel running a JavaScript snippet](docs/images/code-runner-panel.png)
+
+See [the architecture and project notes](docs/ARCHITECTURE.md) for the implementation flow, runtime boundaries, and diagrams.
+
 ## Features
 
 - Runs Python, JavaScript, HTML, and CSS snippets without opening a separate editor.
@@ -46,6 +50,12 @@ The bundled runtime includes commonly used packages such as NumPy, pandas, SciPy
 - Python runs in the browser sandbox; it cannot access local files, installed system packages, or the operating system.
 - Sites with strict content-security policies can prevent the runner from loading.
 - The repository is relatively large because it includes the Pyodide runtime and bundled Python packages.
+
+## Project notes
+
+- The extension uses Manifest V3 and runs a background service worker plus a content script on matching pages.
+- The right-click command opens the full runner panel. Code blocks also receive a hoverable run button for quick execution.
+- JavaScript, HTML, and CSS run in sandboxed preview iframes. Python runs in a separate extension-owned iframe that loads the bundled Pyodide runtime.
 
 ## License
 
