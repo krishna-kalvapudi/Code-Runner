@@ -1,0 +1,49 @@
+{
+  "name": "Code Runner",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "Run code snippets directly from the browser without opening a new window. Supports Python, JS, CSS, HTML for now.",
+  
+  "permissions": [
+    "contextMenus", 
+    "activeTab", 
+    "scripting"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true
+    }
+  ],
+
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["python-runner.html", "python-runner.js", "pyodide/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
